@@ -44,19 +44,26 @@ namespace FinalBugTracker.Migrations
                 roleManager.Create(new IdentityRole("Submitter"));
             }
 
-            if (!context.Users.Any(u => u.Email == "myblogapp0@gmail.com"))
+            ApplicationUser adminUser;
+
+            if (!context.Users.Any(p => p.UserName == "admin@bugtracker.com"))
             {
-                userManager.Create(new ApplicationUser
-                {
-                    UserName = "myblogapp0@gmail.com",
-                    Email = "myblogapp0@gmail.com",
-                    Name = "Foyaz",
-                    FirstName = "Foyaz Ahmed",
-                    LastName = "Ahmed",
-                }, "myblogapp0@");
+                adminUser = new ApplicationUser();
+                adminUser.Email = "admin@bugtracker.com";
+                adminUser.UserName = "admin@bugtracker.com";
+
+                userManager.Create(adminUser, "Password-1");
             }
-            var adminId = userManager.FindByEmail("myblogapp0@gmail.com").Id;
-            userManager.AddToRole(adminId, "Admin");
+            else
+            {
+                adminUser = context.Users.First(p => p.UserName == "admin@bugtracker.com");
+            }
+
+            if (!userManager.IsInRole(adminUser.Id, "Admin"))
+            {
+                userManager.AddToRole(adminUser.Id, "Admin");
+            }
+
 
             if (!context.Users.Any(u => u.Email == "ProjectManager@gmail.com"))
             {
