@@ -35,5 +35,13 @@ namespace FinalBugTracker.Models
         }
 
         public System.Data.Entity.DbSet<FinalBugTracker.Models.Project> Projects { get; set; }
+
+        public System.Data.Entity.DbSet<FinalBugTracker.Models.TicketClasses.Ticket> Tickets { get; set; }
+
+        public System.Data.Entity.DbSet<FinalBugTracker.Models.TicketClasses.TicketPriority> TicketPriorities { get; set; }
+
+        public System.Data.Entity.DbSet<FinalBugTracker.Models.TicketClasses.TicketStatus> TicketStatus { get; set; }
+
+        public System.Data.Entity.DbSet<FinalBugTracker.Models.TicketClasses.TicketType> TicketTypes { get; set; }
     }
 }

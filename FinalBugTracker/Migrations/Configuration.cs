@@ -93,12 +93,12 @@ namespace FinalBugTracker.Migrations
             var DeveloperId = userManager.FindByEmail("Developer@gmail.com").Id;
             userManager.AddToRole(DeveloperId, "Developer");
 
-            if (!context.Users.Any(u => u.Email == "Submitter@gamil.com"))
+            if (!context.Users.Any(u => u.Email == "Submitter@gmail.com"))
             {
                 userManager.Create(new ApplicationUser
                 {
-                    UserName = "Submitter@gamil.com",
-                    Email = "Submitter@gamil.com",
+                    UserName = "Submitter@gmail.com",
+                    Email = "Submitter@gmail.com",
                     Name = "Submitter",
                     FirstName = "Submitter",
                     LastName = "Submitter2",
