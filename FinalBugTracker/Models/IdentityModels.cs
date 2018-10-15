@@ -31,7 +31,5 @@ namespace FinalBugTracker.Models
         {
             return new ApplicationDbContext();
         }
-
-        public System.Data.Entity.DbSet<FinalBugTracker.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }
