@@ -31,5 +31,7 @@ namespace FinalBugTracker.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<FinalBugTracker.Models.Project> Projects { get; set; }
     }
 }
