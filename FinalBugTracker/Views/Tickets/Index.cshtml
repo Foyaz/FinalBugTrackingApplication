@@ -8,12 +8,25 @@
 
 }
 
-<h2>Tickets</h2>
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/Tickets">Tickets</a>
+    </li>
+    <li class="breadcrumb-item active">Overview</li>
+</ol>
 
 @using (Html.BeginForm("Index", "Tickets", FormMethod.Get))
 {
-    <input type="text" class="form-control" name="searchString" placeholder="Search for posts" value="@ViewBag.SearchString" />
-    <input type="submit" class="btn btn-primary" value="Search!" />
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        <div class="input-group">
+            <input type="text" class="form-control" name="searchString" placeholder="Search for Tickets" value="@ViewBag.SearchString" aria-label="Search" aria-describedby="basic-addon2"/>
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
 }
 
 <p>

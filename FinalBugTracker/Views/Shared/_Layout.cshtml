@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Dashboard</title>
+    <title>Bug Tracker Application</title>
 
     <!-- Bootstrap core CSS-->
     <link href="~/LayoutContents/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -29,7 +29,7 @@
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-        <a class="navbar-brand mr-1" href="/Home">Bug Tracker Application</a>
+        <a class="navbar-brand mr-1" href="/Home">Bug Tracker</a>
 
         <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
             <i class="fas fa-bars"></i>
@@ -89,6 +89,12 @@
                 </div>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="/Home/Index">
+                    <i class="fas fa-fw fa-home"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="/Projects/Index">
                     <i class="fas fa-fw fa-project-diagram"></i>
                     <span>Projects</span>
@@ -99,14 +105,25 @@
                     <i class="fas fa-fw fa-user-check"></i>
                     <span>Users</span>
                 </a>
-            </li>            
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="/Tickets">
                     <i class="fas fa-fw fa-ticket-alt"></i>
                     <span>Ticket</span>
                 </a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="/Home/About">
+                    <i class="fas fa-fw fa-address-book"></i>
+                    <span>About</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Home/Contact">
+                    <i class="fas fa-fw fa-inbox"></i>
+                    <span>Contact</span>
+                </a>
+            </li>
 
 
         </ul>
@@ -115,12 +132,6 @@
             <div class="container-fluid">
 
                 <!-- Breadcrumbs-->
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="#">Dashboard</a>
-                    </li>
-                    <li class="breadcrumb-item active">Overview</li>
-                </ol>
                 @RenderBody()
             </div>
             <!-- /.container-fluid -->

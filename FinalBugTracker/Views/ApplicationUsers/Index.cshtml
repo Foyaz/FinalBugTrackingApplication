@@ -9,11 +9,16 @@
     <!-- Main content -->
     <section class="content">
         <!-- Default box -->
-        <h2>Users</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/ApplicationUsers">Users</a>
+            </li>
+            <li class="breadcrumb-item active">Overview</li>
+        </ol>
         <p>
             @if (User.IsInRole("Admin"))
-            { 
-            @Html.ActionLink("Create New", "Create")
+            {
+                @Html.ActionLink("Create New", "Create")
             }
         </p>
         <table class="table">
@@ -28,19 +33,19 @@
             </tr>
             @foreach (var item in Model)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
-                {
+                <tr>
                     <td>
-                        @Html.ActionLink("Change Role", "ChangeRole", new { id = item.Id })
+                        @Html.DisplayFor(modelItem => item.Name)
                     </td>
-                }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+                    {
+                        <td>
+                            @Html.ActionLink("Change Role", "ChangeRole", new { id = item.Id })
+                        </td>
+                    }
                 </tr>
             }
         </table>
