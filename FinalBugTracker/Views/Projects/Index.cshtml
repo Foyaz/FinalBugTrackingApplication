@@ -1,11 +1,19 @@
 ﻿@model IEnumerable<FinalBugTracker.Models.Project>
+@using PagedList;
+@using PagedList.Mvc
 
 @{
     ViewBag.Title = "Index";
+    var pagedList = (IPagedList)Model;
+
 }
 
 <h2>Index</h2>
-
+@using (Html.BeginForm("Index", "Projects", FormMethod.Get))
+{
+    <input type="text" class="form-control" name="searchString" placeholder="Search for posts" value="@ViewBag.SearchString" />
+    <input type="submit" class="btn btn-primary" value="Search!" />
+}
 <p>
     @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
     {
@@ -32,33 +40,35 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Updated)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
-            {
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <br>
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id }) <br>
-                @Html.ActionLink("Assign Users", "AssignUsers", new { id = item.Id })
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Updated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <br>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }) <br>
+                    @Html.ActionLink("Assign Users", "AssignUsers", new { id = item.Id })
                 }
             </td>
         </tr>
-}
-
+    }
+    Page @(pagedList.PageCount < pagedList.PageNumber ? 0 : pagedList.PageNumber) of @pagedList.PageCount
+    @Html.PagedListPager(pagedList, page => Url.Action("Index", new { page, ViewBag.search }))
 </table>

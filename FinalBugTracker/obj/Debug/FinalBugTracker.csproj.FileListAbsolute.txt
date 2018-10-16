@@ -118,3 +118,7 @@ C:\Users\SD07.MITT\Documents\C#\FinalBugTracker\FinalBugTracker\obj\Debug\FinalB
 C:\Users\SD07.MITT\Documents\C#\FinalBugTracker\FinalBugTracker\obj\Debug\FinalBugTracker.csproj.CopyComplete
 C:\Users\SD07.MITT\Documents\C#\FinalBugTracker\FinalBugTracker\obj\Debug\FinalBugTracker.dll
 C:\Users\SD07.MITT\Documents\C#\FinalBugTracker\FinalBugTracker\obj\Debug\FinalBugTracker.pdb
+C:\Users\SD07.MITT\Documents\C#\FinalBugTracker\FinalBugTracker\bin\PagedList.dll
+C:\Users\SD07.MITT\Documents\C#\FinalBugTracker\FinalBugTracker\bin\PagedList.xml
+C:\Users\SD07.MITT\Documents\C#\FinalBugTracker\FinalBugTracker\bin\PagedList.Mvc.dll
+C:\Users\SD07.MITT\Documents\C#\FinalBugTracker\FinalBugTracker\bin\PagedList.Mvc.xml

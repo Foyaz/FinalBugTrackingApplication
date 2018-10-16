@@ -11,6 +11,8 @@ using FinalBugTracker.Models.TicketClasses;
 using FinalBugTracker.Helper;
 using Microsoft.AspNet.Identity;
 using FinalBugTracker.Controllers.TicketsControllers;
+using PagedList;
+using PagedList.Mvc;
 
 namespace FinalBugTracker.Controllers.TicketsControllers
 {
@@ -20,10 +22,20 @@ namespace FinalBugTracker.Controllers.TicketsControllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Tickets
-        public ActionResult Index(string id)
+        public ActionResult Index(int? page, string searchString)
         {
-            var tickets = db.Tickets.Include(t => t.Assignee).Include(t => t.Project).Include(t => t.TicketPriority).Include(t => t.TicketStatus).Include(t => t.TicketType);
-            return View(tickets.ToList());
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+                var TicketQuery = db.Tickets.OrderBy(p => p.Created).AsQueryable();
+                if (!string.IsNullOrWhiteSpace(searchString))
+                {
+                TicketQuery = TicketQuery
+                        .Where(p => p.Title.Contains(searchString)
+                                    ).AsQueryable();
+                }
+                var ticketList = TicketQuery.ToPagedList(pageNumber, pageSize);
+                ViewBag.SearchString = searchString;
+                return View(ticketList);
         }
 
         // GET: Tickets/Details/5

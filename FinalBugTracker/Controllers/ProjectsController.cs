@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FinalBugTracker.Models;
+using PagedList;
+using PagedList.Mvc;
 
 namespace FinalBugTracker.Controllers
 {
@@ -15,9 +17,21 @@ namespace FinalBugTracker.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Projects
-        public ActionResult Index()
+        public ActionResult Index(int? page, string searchString)
         {
-            return View(db.Projects.ToList());
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            var projectQuery = db.Projects.OrderBy(p => p.Created).AsQueryable();
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                projectQuery = projectQuery
+                    .Where(p => p.Name.Contains(searchString) ||
+                                p.UserId.Contains(searchString)
+                                ).AsQueryable();
+            }
+            var projectList = projectQuery.ToPagedList(pageNumber, pageSize);
+            ViewBag.SearchString = searchString;
+            return View(projectList);
         }
 
         // GET: Projects/Details/5
