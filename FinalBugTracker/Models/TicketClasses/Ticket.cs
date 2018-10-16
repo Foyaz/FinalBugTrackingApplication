@@ -32,5 +32,9 @@ namespace FinalBugTracker.Models.TicketClasses
 
         public string AssigneeId { get; set; }
         public virtual ApplicationUser Assignee { get; set; }
+
+        public virtual ICollection<TicketComment> Comments { get; set; }
+        public object Slug { get; internal set; }
+        public IEnumerable<object> TicketComments { get; internal set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Security.Claims;
@@ -56,5 +57,8 @@ namespace FinalBugTracker.Models
         public System.Data.Entity.DbSet<FinalBugTracker.Models.TicketClasses.TicketStatus> TicketStatus { get; set; }
 
         public System.Data.Entity.DbSet<FinalBugTracker.Models.TicketClasses.TicketType> TicketTypes { get; set; }
+
+        public System.Data.Entity.DbSet<FinalBugTracker.Models.TicketClasses.TicketComment> TicketComments { get; set; }
+        public IEnumerable ApplicationUsers { get; internal set; }
     }
 }

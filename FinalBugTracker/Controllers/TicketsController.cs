@@ -45,7 +45,12 @@ namespace FinalBugTracker.Controllers.TicketsControllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ticket ticket = db.Tickets.Find(id);
+            object slug = null;
+            Ticket ticket = db.Tickets
+                .Include(p => p.Comments.Select(t => t.Author))
+                .Where(p => p.Slug == slug)
+                .OrderBy(p => p.Id)
+                .FirstOrDefault();
             if (ticket == null)
             {
                 return HttpNotFound();
@@ -173,6 +178,30 @@ namespace FinalBugTracker.Controllers.TicketsControllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [Authorize]
+        public ActionResult CreateComment(string slug, string body)
+        {
+            if (slug == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var ticket = db.Tickets
+               .Where(p => p.Slug == slug)
+               .FirstOrDefault();
+            if (ticket == null)
+            {
+                return HttpNotFound();
+            }
+            var comment = new TicketComment();
+            comment.AuthorId = User.Identity.GetUserId();
+            comment.TicketId = ticket.Id;
+            comment.Created = DateTime.Now;
+            comment.Body = body;
+            db.TicketComments.Add(comment);
+            db.SaveChanges();
+            return RedirectToAction("DetailsSlug", new { slug = slug });
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
