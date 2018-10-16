@@ -8,17 +8,21 @@ using System.Web;
 using System.Web.Mvc;
 using FinalBugTracker.Models;
 using FinalBugTracker.Models.TicketClasses;
+using FinalBugTracker.Helper;
+using Microsoft.AspNet.Identity;
+using FinalBugTracker.Controllers.TicketsControllers;
 
 namespace FinalBugTracker.Controllers.TicketsControllers
 {
+    [Authorize]
     public class TicketsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Tickets
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
-            var tickets = db.Tickets.Include(t => t.Assignee).Include(t => t.Creator).Include(t => t.Project).Include(t => t.TicketPriority).Include(t => t.TicketStatus).Include(t => t.TicketType);
+            var tickets = db.Tickets.Include(t => t.Assignee).Include(t => t.Project).Include(t => t.TicketPriority).Include(t => t.TicketStatus).Include(t => t.TicketType);
             return View(tickets.ToList());
         }
 
@@ -36,6 +40,7 @@ namespace FinalBugTracker.Controllers.TicketsControllers
             }
             return View(ticket);
         }
+        [Authorize(Roles = "Admin, Project Manager, Developer, Submitter")]
 
         // GET: Tickets/Create
         public ActionResult Create()
@@ -54,10 +59,12 @@ namespace FinalBugTracker.Controllers.TicketsControllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Description,Created,Updated,TicketTypeId,TicketPriorityId,TicketStatusId,CreatorId,ProjectId,AssigneeId")] Ticket ticket)
+        public ActionResult Create([Bind(Include = "Id,Title,Description,TicketTypeId,TicketPriorityId,TicketStatusId,CreatorId,ProjectId,AssigneeId")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
+                ticket.Created = DateTimeOffset.Now;
+                ticket.CreatorId = User.Identity.GetUserId();
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -71,6 +78,8 @@ namespace FinalBugTracker.Controllers.TicketsControllers
             ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", ticket.TicketTypeId);
             return View(ticket);
         }
+
+        [Authorize(Roles = "Admin,Project Manager,Developer")]
 
         // GET: Tickets/Edit/5
         public ActionResult Edit(int? id)
@@ -98,14 +107,24 @@ namespace FinalBugTracker.Controllers.TicketsControllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Description,Created,Updated,TicketTypeId,TicketPriorityId,TicketStatusId,CreatorId,ProjectId,AssigneeId")] Ticket ticket)
+        public ActionResult Edit([Bind(Include = "Id,Title,Description,Created,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,CreatorId,ProjectId,AssigneeId")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(ticket).State = EntityState.Modified;
+                var dbTicket = db.Tickets.Where(p => p.Id == ticket.Id).FirstOrDefault();
+                dbTicket.Title = ticket.Title;
+                dbTicket.Description = ticket.Description;
+                dbTicket.ProjectId = ticket.ProjectId;
+                dbTicket.TicketTypeId = ticket.TicketTypeId;
+                dbTicket.TicketPriorityId = ticket.TicketPriorityId;
+                dbTicket.TicketStatusId = ticket.TicketStatusId;
+                dbTicket.Updated = DateTimeOffset.Now;
+                dbTicket.CreatorId = ticket.CreatorId;
+                dbTicket.AssigneeId = ticket.AssigneeId;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.CreatorId = new SelectList(db.Users, "Id", "Name", ticket.CreatorId);
             ViewBag.AssigneeId = new SelectList(db.Users, "Id", "Name", ticket.AssigneeId);
             ViewBag.CreatorId = new SelectList(db.Users, "Id", "Name", ticket.CreatorId);
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", ticket.ProjectId);
@@ -115,6 +134,7 @@ namespace FinalBugTracker.Controllers.TicketsControllers
             return View(ticket);
         }
 
+        [Authorize(Roles = "Admin,Project Manager")]
         // GET: Tickets/Delete/5
         public ActionResult Delete(int? id)
         {

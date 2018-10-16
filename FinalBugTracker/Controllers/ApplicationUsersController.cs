@@ -15,7 +15,7 @@ using FinalBugTracker.Helper;
 
 namespace FinalBugTracker.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class ApplicationUsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

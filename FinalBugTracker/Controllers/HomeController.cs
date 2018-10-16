@@ -10,6 +10,8 @@ namespace FinalBugTracker.Controllers
     {
         public ActionResult Index()
         {
+            if (User.IsInRole("Submitter"))
+                RedirectToAction("Tickets");
             return View();
         }
 

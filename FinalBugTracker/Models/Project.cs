@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinalBugTracker.Models.TicketClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,6 +21,7 @@ namespace FinalBugTracker.Models
         }
 
         public virtual ICollection<ApplicationUser> Users { get; set; }
+        public virtual ICollection<Ticket> Ticket { get; set; }
 
     }
 }

@@ -1,6 +1,9 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using FinalBugTracker.Models.TicketClasses;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -12,7 +15,17 @@ namespace FinalBugTracker.Models
         public string Name { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
+        public IEnumerable<object> Projects { get; internal set; }
+        [InverseProperty("Creator")]
+        public virtual ICollection<Ticket> CreatedTickets { get; set; }
+        [InverseProperty("Assignee")]
+        public virtual ICollection<Ticket> AssignedTickets { get; set; }
+        public ApplicationUser()
+        {
+            Projects = new HashSet<Project>();
+            AssignedTickets = new HashSet<Ticket>();
+            CreatedTickets = new HashSet<Ticket>();
+        }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
