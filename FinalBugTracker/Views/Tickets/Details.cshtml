@@ -109,7 +109,7 @@
     <div>
         @using (Html.BeginForm("CreateComment", "Tickets", FormMethod.Post))
         {
-            <input type="hidden" name="slug" value="@Model.Slug" />
+            <input type="hidden" name="slug" value="@Model.Id" />
             <textarea name="body"></textarea>
             <input type="submit" value="Submit" />
         }

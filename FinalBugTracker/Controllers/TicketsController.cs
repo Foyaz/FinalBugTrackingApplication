@@ -45,10 +45,9 @@ namespace FinalBugTracker.Controllers.TicketsControllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            object slug = null;
             Ticket ticket = db.Tickets
                 .Include(p => p.Comments.Select(t => t.Author))
-                .Where(p => p.Slug == slug)
+                .Where(p => p.Id == id)
                 .OrderBy(p => p.Id)
                 .FirstOrDefault();
             if (ticket == null)
@@ -180,14 +179,14 @@ namespace FinalBugTracker.Controllers.TicketsControllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult CreateComment(string slug, string body)
+        public ActionResult CreateComment(string id, string body)
         {
-            if (slug == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var ticket = db.Tickets
-               .Where(p => p.Slug == slug)
+               .Where(p => p.id == id)
                .FirstOrDefault();
             if (ticket == null)
             {
@@ -200,7 +199,7 @@ namespace FinalBugTracker.Controllers.TicketsControllers
             comment.Body = body;
             db.TicketComments.Add(comment);
             db.SaveChanges();
-            return RedirectToAction("DetailsSlug", new { slug = slug });
+            return RedirectToAction("DetailsSlug", new { id = id });
         }
         protected override void Dispose(bool disposing)
         {

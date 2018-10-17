@@ -21,7 +21,7 @@ namespace FinalBugTracker.Models
         }
 
         public virtual ICollection<ApplicationUser> Users { get; set; }
-        public virtual ICollection<Ticket> Ticket { get; set; }
+        public virtual ICollection<Ticket> Tickets { get; set; }
 
     }
 }
