@@ -92,43 +92,72 @@
 
     </dl>
 </div>
-
 <div>
-    Comments:
-    @foreach (var comment in Model.TicketComments)
+    Attachments:
+    @foreach (var attachment in Model.TicketAttachments)
     {
         <p>
-            @comment.Body- @comment.Created.ToString("dd/MM/yyyy HH:mm")
+            @attachment.Id- @attachment.FilePath- @attachment.Description- @attachment.Created.ToString("dd/MM/yyyy HH:mm")
         </p>
         if (User.Identity.IsAuthenticated &&
             (User.IsInRole("Admin") || User.IsInRole("Project Manager")))
         {
-            <a href="@Url.Action("Edit", "TicketComments", new { id = comment.Id } )">Edit Comment</a>
-            <a href="@Url.Action("Delete", "TicketComments", new { id = comment.Id })">Delete Comment</a>
+            <a href="@Url.Action("Edit", "TicketAttachments", new { id = attachment.Id } )">Edit </a>
+            <a href="@Url.Action("Delete", "TicketAttachments", new { id = attachment.Id })">Delete </a>
         }
     }
 </div>
-
 @if (User.Identity.IsAuthenticated)
 {
     <div>
-        Submit your comment!
+        Ticket Attachments:
     </div>
     <div>
-        @using (Html.BeginForm("DetailsSlug", "Tickets", FormMethod.Post))
+        @using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post))
         {
-            <input type="hidden" name="slug" value="@Model.Slug" />
-            <textarea name="Body"></textarea>
-            if (ViewBag.ErrorMessage != null)
-            {
-                <span>@ViewBag.ErrorMessage</span>
-            }
-            <input type="submit" value="Submit" />
+            <button type="" name="id" value="@Model.Id"> Attach </button>
         }
-    </div>
+        </div>
 }
 
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+            <div>
+                Comments:
+                @foreach (var comment in Model.TicketComments)
+                {
+                    <p>
+                        @comment.Body- @comment.Created.ToString("dd/MM/yyyy HH:mm")
+                    </p>
+                    if (User.Identity.IsAuthenticated &&
+                        (User.IsInRole("Admin") || User.IsInRole("Project Manager")))
+                    {
+                        <a href="@Url.Action("Edit", "TicketComments", new { id = comment.Id } )">Edit Comment</a>
+                        <a href="@Url.Action("Delete", "TicketComments", new { id = comment.Id })">Delete Comment</a>
+                    }
+                }
+            </div>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div>
+                    Submit your comment!
+                </div>
+                <div>
+                    @using (Html.BeginForm("CreateComment", "Tickets", FormMethod.Post))
+                    {
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <textarea name="Body"></textarea>
+                        if (ViewBag.ErrorMessage != null)
+                        {
+                            <span>@ViewBag.ErrorMessage</span>
+                        }
+                        <input type="submit" value="Submit" />
+                    }
+                </div>
+            }
+
+
+
+            <p>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Back to List", "Index")
+            </p>

@@ -40,8 +40,8 @@ namespace FinalBugTracker.Controllers
         // GET: TicketAttachments/Create
         public ActionResult Create()
         {
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Slug");
-            ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Name");
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title");
+            //ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Name");
             return View();
         }
 
@@ -59,8 +59,8 @@ namespace FinalBugTracker.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Slug", ticketAttachment.TicketId);
-            ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Name", ticketAttachment.UserId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachment.TicketId);
+            //ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Name", ticketAttachment.UserId);
             return View(ticketAttachment);
         }
 
@@ -76,8 +76,8 @@ namespace FinalBugTracker.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Slug", ticketAttachment.TicketId);
-            ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Name", ticketAttachment.UserId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachment.TicketId);
+            //ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Name", ticketAttachment.UserId);
             return View(ticketAttachment);
         }
 
@@ -94,8 +94,8 @@ namespace FinalBugTracker.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Slug", ticketAttachment.TicketId);
-            ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Name", ticketAttachment.UserId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketAttachment.TicketId);
+            //ViewBag.UserId = new SelectList(db.ApplicationUsers, "Id", "Name", ticketAttachment.UserId);
             return View(ticketAttachment);
         }
 
