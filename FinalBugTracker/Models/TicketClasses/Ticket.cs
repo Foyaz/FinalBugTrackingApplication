@@ -36,12 +36,13 @@ namespace FinalBugTracker.Models.TicketClasses
 
         public virtual ICollection<TicketComment> TicketComments { get; set; }
         public virtual ICollection<TicketAttachment> TicketAttachments { get; set; }
-
+        public virtual ICollection<TicketHistory> TicketHistories { get; set; }
 
         public Ticket()
         {
             this.TicketComments = new HashSet<TicketComment>();
             this.TicketAttachments = new HashSet<TicketAttachment>();
+            this.TicketHistories = new HashSet<TicketHistory>();
         }
     }
 }
