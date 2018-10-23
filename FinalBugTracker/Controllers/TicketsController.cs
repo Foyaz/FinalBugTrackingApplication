@@ -24,19 +24,27 @@ namespace FinalBugTracker.Controllers.TicketsControllers
         // GET: Tickets
         public ActionResult Index(int? page, string searchString)
         {
-                int pageSize = 3;
-                int pageNumber = (page ?? 1);
-                var TicketQuery = db.Tickets.OrderBy(p => p.Created).AsQueryable();
-                if (!string.IsNullOrWhiteSpace(searchString))
-                {
-                TicketQuery = TicketQuery
-                        .Where(p => p.Title.Contains(searchString)
-                                    ).AsQueryable();
-                }
-                var ticketList = TicketQuery.ToPagedList(pageNumber, pageSize);
-                ViewBag.SearchString = searchString;
-                return View(ticketList);
-        }
+            int pageSize = 1;
+            int pageNumber = (page ?? 1);
+
+            var ticketQuery = db.Tickets.OrderBy(p => p.Created).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                ticketQuery = ticketQuery
+                    .Where(p => p.Title.Contains(searchString) ||
+                                p.CreatorId.Contains(searchString) ||
+                                p.AssigneeId.Contains(searchString) ||
+                                p.TicketComments.Any(t => t.Body.Contains(searchString))
+                           ).AsQueryable();
+            }
+
+            var ticketList = ticketQuery.ToPagedList(pageNumber, pageSize);
+
+            ViewBag.SearchString = searchString;
+
+            return View(ticketList);
+    }
 
         // GET: Tickets/Details/5
         public ActionResult Details(int? id)
@@ -45,17 +53,33 @@ namespace FinalBugTracker.Controllers.TicketsControllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ticket ticket = db.Tickets
-                .Include(p => p.Comments.Select(t => t.Author))
-                .Where(p => p.Id == id)
-                .OrderBy(p => p.Id)
-                .FirstOrDefault();
+            Ticket ticket = db.Tickets.Find(id);
             if (ticket == null)
             {
                 return HttpNotFound();
             }
             return View(ticket);
         }
+
+        // GET: Tickets/Details/5
+        public ActionResult DetailsSlug(string slug)
+        {
+            if (slug == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Ticket ticket = db.Tickets
+                .Include(p => p.TicketComments.Select(t => t.Author))
+                .Where(p => p.Slug == slug)
+                .OrderBy(p => p.Id)
+                .FirstOrDefault();
+            if (ticket == null)
+            {
+                return HttpNotFound();
+            }
+            return View("Details", ticket);
+        }
+
         [Authorize(Roles = "Admin, Project Manager, Developer, Submitter")]
 
         // GET: Tickets/Create
@@ -179,28 +203,34 @@ namespace FinalBugTracker.Controllers.TicketsControllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult CreateComment(string id, string body)
+        public ActionResult CreateComment(string slug, string body)
         {
-            if (id == null)
+            if (slug == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var ticket = db.Tickets
-               .Where(p => p.id == id)
+               .Where(p => p.Slug == slug)
                .FirstOrDefault();
             if (ticket == null)
             {
                 return HttpNotFound();
             }
+            if (string.IsNullOrWhiteSpace(body))
+            {
+                TempData["ErrorMessage"] = "Comment is required";
+                return RedirectToAction("DetailsSlug", new { slug = slug });
+            }
             var comment = new TicketComment();
             comment.AuthorId = User.Identity.GetUserId();
-            comment.TicketId = ticket.Id;
             comment.Created = DateTime.Now;
             comment.Body = body;
             db.TicketComments.Add(comment);
             db.SaveChanges();
-            return RedirectToAction("DetailsSlug", new { id = id });
+            return RedirectToAction("DetailsSlug", new { slug = slug });
         }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

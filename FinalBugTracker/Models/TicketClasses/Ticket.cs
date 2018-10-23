@@ -7,9 +7,9 @@ namespace FinalBugTracker.Models.TicketClasses
 {
     public class Ticket
     {
-        internal string id;
-
         public int Id { get; set; }
+        public string Slug { get; internal set; }
+
 
         public string Title { get; set; }
         public string Description { get; set; }
@@ -35,7 +35,7 @@ namespace FinalBugTracker.Models.TicketClasses
         public string AssigneeId { get; set; }
         public virtual ApplicationUser Assignee { get; set; }
 
-        public virtual ICollection<TicketComment> Comments { get; set; }
-        public IEnumerable<object> TicketComments { get; internal set; }
+        public virtual ICollection<TicketComment> TicketComments { get; set; }
+
     }
 }

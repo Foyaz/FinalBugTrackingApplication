@@ -92,29 +92,42 @@
 
     </dl>
 </div>
+
 <div>
     Comments:
-    @foreach (var comment in Model.Comments)
+    @foreach (var comment in Model.TicketComments)
     {
         <p>
-            @comment.Body - by @comment.Author.Id - @comment.Created.ToString("dd/MM/yyyy HH:mm")
+            @comment.Body - by @comment.Author.Name - @comment.Created.ToString("dd/MM/yyyy HH:mm")
         </p>
+        if (User.Identity.IsAuthenticated &&
+            (User.IsInRole("Admin") || User.IsInRole("Project Manager")))
+        {
+            <a href="@Url.Action("Edit", "TicketComments", new { id = comment.Id } )">Edit Comment</a>
+            <a href="@Url.Action("Delete", "TicketComments", new { id = comment.Id })">Delete Comment</a>
+        }
     }
 </div>
+
 @if (User.Identity.IsAuthenticated)
 {
     <div>
         Submit your comment!
     </div>
     <div>
-        @using (Html.BeginForm("CreateComment", "Tickets", FormMethod.Post))
+        @using (Html.BeginForm("DetailsSlug", "Tickets", FormMethod.Post))
         {
-            <input type="hidden" name="slug" value="@Model.Id" />
-            <textarea name="body"></textarea>
+            <input type="hidden" name="slug" value="@Model.Slug" />
+            <textarea name="Body"></textarea>
+            if (ViewBag.ErrorMessage != null)
+            {
+                <span>@ViewBag.ErrorMessage</span>
+            }
             <input type="submit" value="Submit" />
         }
     </div>
 }
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
