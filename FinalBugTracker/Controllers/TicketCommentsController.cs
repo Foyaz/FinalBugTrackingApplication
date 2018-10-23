@@ -18,7 +18,7 @@ namespace FinalBugTracker.Controllers
         // GET: TicketComments
         public ActionResult Index()
         {
-            var ticketComments = db.TicketComments.Include(t => t.Author).Include(t => t.Ticket);
+            var ticketComments = db.TicketComments./*Include(t => t.Author).*/Include(t => t.Ticket);
             return View(ticketComments.ToList());
         }
 
@@ -40,7 +40,7 @@ namespace FinalBugTracker.Controllers
         // GET: TicketComments/Create
         public ActionResult Create()
         {
-            ViewBag.AuthorId = new SelectList(db.ApplicationUsers, "Id", "Name");
+            //ViewBag.AuthorId = new SelectList(db.ApplicationUsers, "Id", "Name");
             ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title");
             return View();
         }
@@ -59,7 +59,7 @@ namespace FinalBugTracker.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AuthorId = new SelectList(db.ApplicationUsers, "Id", "Name", ticketComment.AuthorId);
+            //ViewBag.AuthorId = new SelectList(db.ApplicationUsers, "Id", "Name", ticketComment.AuthorId);
             ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketComment.TicketId);
             return View(ticketComment);
         }
@@ -76,7 +76,7 @@ namespace FinalBugTracker.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AuthorId = new SelectList(db.ApplicationUsers, "Id", "Name", ticketComment.AuthorId);
+            //ViewBag.AuthorId = new SelectList(db.ApplicationUsers, "Id", "Name", ticketComment.AuthorId);
             ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketComment.TicketId);
             return View(ticketComment);
         }
@@ -94,7 +94,7 @@ namespace FinalBugTracker.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AuthorId = new SelectList(db.ApplicationUsers, "Id", "Name", ticketComment.AuthorId);
+            //ViewBag.AuthorId = new SelectList(db.ApplicationUsers, "Id", "Name", ticketComment.AuthorId);
             ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketComment.TicketId);
             return View(ticketComment);
         }

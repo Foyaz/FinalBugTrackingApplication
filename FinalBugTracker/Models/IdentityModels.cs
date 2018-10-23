@@ -60,5 +60,7 @@ namespace FinalBugTracker.Models
 
         public System.Data.Entity.DbSet<FinalBugTracker.Models.TicketClasses.TicketComment> TicketComments { get; set; }
         public IEnumerable ApplicationUsers { get; internal set; }
+
+        public System.Data.Entity.DbSet<FinalBugTracker.Models.TicketClasses.TicketAttachment> TicketAttachments { get; set; }
     }
 }

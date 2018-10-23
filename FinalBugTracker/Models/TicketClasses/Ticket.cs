@@ -10,7 +10,6 @@ namespace FinalBugTracker.Models.TicketClasses
         public int Id { get; set; }
         public string Slug { get; internal set; }
 
-
         public string Title { get; set; }
         public string Description { get; set; }
 
@@ -36,6 +35,13 @@ namespace FinalBugTracker.Models.TicketClasses
         public virtual ApplicationUser Assignee { get; set; }
 
         public virtual ICollection<TicketComment> TicketComments { get; set; }
+        public virtual ICollection<TicketAttachment> TicketAttachments { get; set; }
 
+
+        public Ticket()
+        {
+            this.TicketComments = new HashSet<TicketComment>();
+            this.TicketAttachments = new HashSet<TicketAttachment>();
+        }
     }
 }

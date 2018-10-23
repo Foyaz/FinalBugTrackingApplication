@@ -69,7 +69,7 @@ namespace FinalBugTracker.Controllers.TicketsControllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Ticket ticket = db.Tickets
-                .Include(p => p.TicketComments.Select(t => t.Author))
+                .Include(p => p.TicketComments.Select(t => t.TicketId))
                 .Where(p => p.Slug == slug)
                 .OrderBy(p => p.Id)
                 .FirstOrDefault();
@@ -222,7 +222,7 @@ namespace FinalBugTracker.Controllers.TicketsControllers
                 return RedirectToAction("DetailsSlug", new { slug = slug });
             }
             var comment = new TicketComment();
-            comment.AuthorId = User.Identity.GetUserId();
+            //comment.AuthorId = User.Identity.GetUserId();
             comment.Created = DateTime.Now;
             comment.Body = body;
             db.TicketComments.Add(comment);

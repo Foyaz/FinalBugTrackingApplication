@@ -98,7 +98,7 @@
     @foreach (var comment in Model.TicketComments)
     {
         <p>
-            @comment.Body - by @comment.Author.Name - @comment.Created.ToString("dd/MM/yyyy HH:mm")
+            @comment.Body- @comment.Created.ToString("dd/MM/yyyy HH:mm")
         </p>
         if (User.Identity.IsAuthenticated &&
             (User.IsInRole("Admin") || User.IsInRole("Project Manager")))
