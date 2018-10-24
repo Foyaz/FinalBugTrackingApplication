@@ -40,7 +40,7 @@ namespace FinalBugTracker.Controllers
         // GET: TicketHistories/Create
         public ActionResult Create()
         {
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Slug");
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title");
             return View();
         }
 
@@ -58,7 +58,7 @@ namespace FinalBugTracker.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Slug", ticketHistory.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketHistory.TicketId);
             return View(ticketHistory);
         }
 
@@ -74,7 +74,7 @@ namespace FinalBugTracker.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Slug", ticketHistory.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketHistory.TicketId);
             return View(ticketHistory);
         }
 
@@ -91,7 +91,7 @@ namespace FinalBugTracker.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Slug", ticketHistory.TicketId);
+            ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", ticketHistory.TicketId);
             return View(ticketHistory);
         }
 

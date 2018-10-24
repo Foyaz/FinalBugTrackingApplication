@@ -52,6 +52,24 @@
 
     </dl>
 </div>
+<div>
+    <strong>Assigned Tickets:</strong> 
+    <br>
+    @foreach (var tickets in Model.Tickets)
+    {
+    <p>
+        Title:@tickets.Title- Description:@tickets.Description- TicketType:@tickets.TicketTypeId- TicketPriority:@tickets.TicketPriorityId- TicketStatus:@tickets.TicketStatusId- Created:@tickets.Created.ToString("dd/MM/yyyy HH:mm")
+           @if (User.Identity.IsAuthenticated &&
+            (User.IsInRole("Admin") || User.IsInRole("Project Manager")))
+        {
+            <a href="@Url.Action("Edit", "Tickets", new { id = tickets.Id } )">Edit </a>
+            <a href="@Url.Action("Delete", "Tickets", new { id = tickets.Id })">Delete </a>
+            <a href="@Url.Action("Details", "Tickets", new { id = tickets.Id })">Details </a>
+        }
+    </p>
+    }
+</div>
+<br>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")

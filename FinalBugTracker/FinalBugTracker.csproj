@@ -237,6 +237,12 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
+    <Content Include="File\bugGif.gif" />
+    <Content Include="File\bugGif2.gif" />
+    <Content Include="File\bugGif3.gif" />
+    <Content Include="File\bugGif4.gif" />
+    <Content Include="File\Logo-2.png" />
+    <Content Include="File\Logo.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -1787,16 +1793,16 @@
     <Content Include="Views\TicketComments\Details.cshtml" />
     <Content Include="Views\TicketComments\Edit.cshtml" />
     <Content Include="Views\TicketComments\Index.cshtml" />
-    <Content Include="Views\TicketAttachments\Create.cshtml" />
-    <Content Include="Views\TicketAttachments\Delete.cshtml" />
-    <Content Include="Views\TicketAttachments\Details.cshtml" />
-    <Content Include="Views\TicketAttachments\Edit.cshtml" />
-    <Content Include="Views\TicketAttachments\Index.cshtml" />
     <Content Include="Views\TicketHistories\Create.cshtml" />
     <Content Include="Views\TicketHistories\Delete.cshtml" />
     <Content Include="Views\TicketHistories\Details.cshtml" />
     <Content Include="Views\TicketHistories\Edit.cshtml" />
     <Content Include="Views\TicketHistories\Index.cshtml" />
+    <Content Include="Views\TicketAttachments\Create.cshtml" />
+    <Content Include="Views\TicketAttachments\Delete.cshtml" />
+    <Content Include="Views\TicketAttachments\Details.cshtml" />
+    <Content Include="Views\TicketAttachments\Edit.cshtml" />
+    <Content Include="Views\TicketAttachments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

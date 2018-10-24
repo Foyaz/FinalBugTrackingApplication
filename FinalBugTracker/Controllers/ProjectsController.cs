@@ -19,7 +19,7 @@ namespace FinalBugTracker.Controllers
         // GET: Projects
         public ActionResult Index(int? page, string searchString)
         {
-            int pageSize = 3;
+            int pageSize = 1;
             int pageNumber = (page ?? 1);
             var projectQuery = db.Projects.OrderBy(p => p.Created).AsQueryable();
             if (!string.IsNullOrWhiteSpace(searchString))

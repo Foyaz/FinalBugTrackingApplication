@@ -43,6 +43,20 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.MediaURL)
+        </dt>
+
+        <dd>
+
+            @if (Model.MediaURL != null)
+            {
+
+                <img class="img-responsive" src="@Model.MediaURL" width="500px" height="400px" alt="">
+            }
+
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Created)
         </dt>
 
