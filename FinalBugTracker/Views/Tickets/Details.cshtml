@@ -92,84 +92,115 @@
 
     </dl>
 </div>
-<div>
-    <strong>Attachments:</strong>
-    @foreach (var attachment in Model.TicketAttachments)
-    {
-        <p>
-            @attachment.Id- @attachment.FilePath- @attachment.Description- @attachment.Created.ToString("dd/MM/yyyy HH:mm")
-            @if (User.Identity.IsAuthenticated &&
-                     (User.IsInRole("Admin") || User.IsInRole("Project Manager")))
-            {
-                <a href="@Url.Action("Edit", "TicketAttachments", new { id = attachment.Id } )">Edit </a>
-                <a href="@Url.Action("Delete", "TicketAttachments", new { id = attachment.Id })">Delete </a>
-                <a href="@Url.Action("Details", "TicketAttachments", new { id = attachment.Id })">Details </a>
-            }
-        </p>
-    }
-</div>
-@if (User.Identity.IsAuthenticated)
-{
-    <div>
-        <strong>Attach File: </strong>
-    </div>
-    <div>
-        @using (Html.BeginForm("Create/", "TicketAttachments", FormMethod.Post))
-        {
-            <button type="" name="id" value="@Model.Id"> Attach </button>
-        }
-    </div>
-}
 
-<div>
-    <strong>Comments:</strong>
-    @foreach (var comment in Model.TicketComments)
-    {
-        <p>
-            @comment.Body- @comment.Created.ToString("dd/MM/yyyy HH:mm")
-            @if (User.Identity.IsAuthenticated &&
-            (User.IsInRole("Admin") || User.IsInRole("Project Manager")))
-            {
-                <a href="@Url.Action("Edit", "TicketComments", new { id = comment.Id } )">Edit </a>
-                <a href="@Url.Action("Delete", "TicketComments", new { id = comment.Id })">Delete </a>
-            }
-        </p>
-    }
+<div class="TicketContainer">
+    <div class="container">
+        <div class="card card-register mx-auto mt-5">
+            <div class="card-body">
+                <div>
+                    <strong>Comments:</strong>
+                    @foreach (var comment in Model.TicketComments)
+                    {
+                        <ul>
+                            <li>Ticket Id: @comment.TicketId</li>
+                            <li>Description: @comment.Body</li>
+                            <li>Created: @comment.Created.ToString("dd/MM/yyyy HH:mm")</li>
+                        </ul>
+                        <a href="@Url.Action("Edit", "TicketComments", new { id = comment.Id } )">Edit </a>
+                        <a href="@Url.Action("Delete", "TicketComments", new { id = comment.Id })">Delete </a>
+
+                    }
+                </div>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div>
+                        <strong>Submit Comments:</strong>
+                    </div>
+                    <div>
+                        @using (Html.BeginForm("CreateComment", "Tickets", FormMethod.Post, new { id = Model.Id }))
+                        {
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <textarea name="Body"></textarea>
+                            if (ViewBag.ErrorMessage != null)
+                            {
+                                <span>@ViewBag.ErrorMessage</span>
+                            }
+                            <input type="submit" value="Submit" />
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>
 
-@if (User.Identity.IsAuthenticated)
-{
-    <div>
-        <strong>Submit Comments:</strong>
+<div class="TicketContainer">
+    <div class="container">
+        <div class="card card-register mx-auto mt-5">
+            <div class="card-body">
+                <div>
+                    <strong>Attachments:</strong>
+                    @foreach (var attachment in Model.TicketAttachments)
+                    {
+                        <ul>
+                            <li>Id: @attachment.Id</li>
+                            <li>File Path:  @attachment.FilePath</li>
+                            <li>Description: @attachment.Description</li>
+                            <li>Created:  @attachment.Created.ToString("dd/MM/yyyy HH:mm")</li>
+                        </ul>
+                        if (User.Identity.IsAuthenticated &&
+                                 (User.IsInRole("Admin") || User.IsInRole("Project Manager")))
+                        {
+                            <a href="@Url.Action("Edit", "TicketAttachments", new { id = attachment.Id } )">Edit </a>
+                            <a href="@Url.Action("Delete", "TicketAttachments", new { id = attachment.Id })">Delete </a>
+                            <a href="@Url.Action("Details", "TicketAttachments", new { id = attachment.Id })">Details </a>
+                        }
+                    }
+                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div>
+                        <strong>Attach File: </strong>
+                    </div>
+                    <div>
+                        @using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <button name="id" value="@Model.Id"> Attach </button>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
     </div>
-    <div>
-        @using (Html.BeginForm("CreateComment", "Tickets", FormMethod.Post))
-        {
-            <input type="hidden" name="id" value="@Model.Id" />
-            <textarea name="Body"></textarea>
-            if (ViewBag.ErrorMessage != null)
-            {
-                <span>@ViewBag.ErrorMessage</span>
-            }
-            <input type="submit" value="Submit" />
-        }
-    </div>
-}
-<div>
-    <strong>History:</strong>
-    @foreach (var history in Model.TicketHistories)
-    {
-        <p>
-            User:@history.UserId- Property:@history.Property- OldValue:@history.OldValue- NewValue:@history.NewValue- Changed:@history.Changed.ToString("dd/MM/yyyy HH:mm")
-            @if (User.Identity.IsAuthenticated &&
-            (User.IsInRole("Admin") || User.IsInRole("Project Manager")))
-            {
-                <a href="@Url.Action("Edit", "TicketHistories", new { id = history.Id } )">Edit </a>
-                <a href="@Url.Action("Delete", "TicketHistories", new { id = history.Id })">Delete </a>
-            }
-        </p>
-    }
 </div>
+
+<div class="TicketContainer">
+    <div class="container">
+        <div class="card card-register mx-auto mt-5">
+            <div class="card-body">
+                <div>
+                    <strong>History:</strong>
+                    @foreach (var history in Model.TicketHistories)
+                    {
+                        <p>
+                            User:@history.UserId- Property:@history.Property- OldValue:@history.OldValue- NewValue:@history.NewValue- Changed:@history.Changed.ToString("dd/MM/yyyy HH:mm")
+                            @if (User.Identity.IsAuthenticated &&
+                            (User.IsInRole("Admin") || User.IsInRole("Project Manager")))
+                            {
+                                <a href="@Url.Action("Edit", "TicketHistories", new { id = history.Id } )">Edit </a>
+                                <a href="@Url.Action("Delete", "TicketHistories", new { id = history.Id })">Delete </a>
+                            }
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 <p>

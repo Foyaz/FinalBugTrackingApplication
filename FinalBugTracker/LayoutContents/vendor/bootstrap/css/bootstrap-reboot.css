@@ -339,4 +339,10 @@ template {
 [hidden] {
   display: none !important;
 }
+
+.TicketContainer {
+    border-color: black;
+    border-radius: 10px;
+    background-color: yellow;
+}
 /*# sourceMappingURL=bootstrap-reboot.css.map */

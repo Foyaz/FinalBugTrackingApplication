@@ -65,24 +65,6 @@ namespace FinalBugTracker.Controllers.TicketsControllers
             return View(ticket);
         }
 
-        //// GET: Tickets/Details/5
-        //public ActionResult Details(string slug)
-        //{
-        //    if (slug == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Ticket ticket = db.Tickets
-        //        .Include(p => p.TicketComments.Select(t => t.TicketId))
-        //        .Where(p => p.Slug == slug)
-        //        .OrderBy(p => p.Id)
-        //        .FirstOrDefault();
-        //    if (ticket == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View("Details", ticket);
-        //}
 
         [Authorize(Roles = "Admin, Project Manager, Developer, Submitter")]
 
@@ -209,7 +191,7 @@ namespace FinalBugTracker.Controllers.TicketsControllers
         [Authorize]
         public ActionResult CreateComment(int id, string body)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -223,14 +205,15 @@ namespace FinalBugTracker.Controllers.TicketsControllers
             if (string.IsNullOrWhiteSpace(body))
             {
                 TempData["ErrorMessage"] = "Comment is required";
-                return RedirectToAction("Details", new { id = id });
+                return RedirectToAction("Details", new { ticket.Id });
             }
             var comment = new TicketComment();
+            comment.TicketId = ticket.Id;
             comment.Created = DateTime.Now;
             comment.Body = body;
             db.TicketComments.Add(comment);
             db.SaveChanges();
-            return RedirectToAction("Details", new { id = id });
+            return RedirectToAction("Details", new { id});
         }
 
 
