@@ -21,6 +21,12 @@ namespace FinalBugTracker.Controllers
 
             return View();
         }
+        public ActionResult Dashboard()
+        {
+            ViewBag.Message = "Your application Dashboard page.";
+
+            return View();
+        }
 
         public ActionResult Contact()
         {

@@ -124,7 +124,6 @@ namespace FinalBugTracker.Migrations
                new TicketStatus { Name = "In Progress" },
                new TicketStatus { Name = "Optional" }
            );
-
         }
     }
 }

@@ -64,5 +64,7 @@ namespace FinalBugTracker.Models
         public System.Data.Entity.DbSet<FinalBugTracker.Models.TicketClasses.TicketAttachment> TicketAttachments { get; set; }
 
         public System.Data.Entity.DbSet<FinalBugTracker.Models.TicketClasses.TicketHistory> TicketHistories { get; set; }
+
+        public System.Data.Entity.DbSet<FinalBugTracker.Models.TicketClasses.TicketNotification> TicketNotifications { get; set; }
     }
 }

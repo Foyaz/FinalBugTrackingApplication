@@ -7,17 +7,17 @@
     var pagedList = (IPagedList)Model;
 
 }
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="/Projects/Index">Projects</a>
-                    </li>
-                    <li class="breadcrumb-item active">Overview</li>
-                </ol>
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/Projects/Index">Projects</a>
+    </li>
+    <li class="breadcrumb-item active">Overview</li>
+</ol>
 @using (Html.BeginForm("Index", "Projects", FormMethod.Get))
 {
     <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
         <div class="input-group">
-            <input type="text" class="form-control" name="searchString" placeholder="Search for Projects" value="@ViewBag.SearchString" aria-label="Search" aria-describedby="basic-addon2"/>
+            <input type="text" class="form-control" name="searchString" placeholder="Search for Projects" value="@ViewBag.SearchString" aria-label="Search" aria-describedby="basic-addon2" />
             <div class="input-group-append">
                 <button class="btn btn-primary" type="submit">
                     <i class="fas fa-search"></i>
@@ -81,6 +81,11 @@
             </td>
         </tr>
     }
-    Page @(pagedList.PageCount < pagedList.PageNumber ? 0 : pagedList.PageNumber) of @pagedList.PageCount
-    @Html.PagedListPager(pagedList, page => Url.Action("Index", new { page, ViewBag.search }))
 </table>
+<ul>
+    Page @(pagedList.PageCount < pagedList.PageNumber ? 0 : pagedList.PageNumber) of @pagedList.PageCount 
+   <li>
+       @Html.PagedListPager(pagedList, page => Url.Action("Index", new { page, ViewBag.search }))
+       </li>
+</ul>
+   

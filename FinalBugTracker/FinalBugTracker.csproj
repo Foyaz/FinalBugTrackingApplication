@@ -208,6 +208,7 @@
     <Compile Include="Controllers\TicketAttachmentsController.cs" />
     <Compile Include="Controllers\TicketCommentsController.cs" />
     <Compile Include="Controllers\TicketHistoriesController.cs" />
+    <Compile Include="Controllers\TicketNotificationsController.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -223,6 +224,7 @@
     <Compile Include="Models\TicketClasses\TicketAttachment.cs" />
     <Compile Include="Models\TicketClasses\TicketComment.cs" />
     <Compile Include="Models\TicketClasses\TicketHistory.cs" />
+    <Compile Include="Models\TicketClasses\TicketNotification.cs" />
     <Compile Include="Models\TicketClasses\TicketPriority.cs" />
     <Compile Include="Models\TicketClasses\TicketStatus.cs" />
     <Compile Include="Models\TicketClasses\TicketType.cs" />
@@ -1803,6 +1805,12 @@
     <Content Include="Views\TicketAttachments\Details.cshtml" />
     <Content Include="Views\TicketAttachments\Edit.cshtml" />
     <Content Include="Views\TicketAttachments\Index.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\TicketNotifications\Create.cshtml" />
+    <Content Include="Views\TicketNotifications\Delete.cshtml" />
+    <Content Include="Views\TicketNotifications\Details.cshtml" />
+    <Content Include="Views\TicketNotifications\Edit.cshtml" />
+    <Content Include="Views\TicketNotifications\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
