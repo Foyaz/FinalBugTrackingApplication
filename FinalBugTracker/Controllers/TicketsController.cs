@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity;
 using FinalBugTracker.Controllers.TicketsControllers;
 using PagedList;
 using PagedList.Mvc;
+using System.IO;
 
 namespace FinalBugTracker.Controllers.TicketsControllers
 {
@@ -64,6 +65,7 @@ namespace FinalBugTracker.Controllers.TicketsControllers
             }
             return View(ticket);
         }
+
 
 
         [Authorize(Roles = "Admin, Project Manager, Developer, Submitter")]
@@ -216,6 +218,30 @@ namespace FinalBugTracker.Controllers.TicketsControllers
             return RedirectToAction("Details", new { id});
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult Attachment( int id)
+        {
+            if (id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var ticket = db.Tickets
+               .Where(p => p.Id == id)
+               .FirstOrDefault();
+            if (ticket == null)
+            {
+                return HttpNotFound();
+            }
+            var attachment = new TicketAttachment();
+            attachment.TicketId = ticket.Id;
+            attachment.Created = DateTime.Now;
+            db.TicketAttachments.Add(attachment);
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id });
+        }
 
         protected override void Dispose(bool disposing)
         {

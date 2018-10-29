@@ -55,7 +55,7 @@ namespace FinalBugTracker.Controllers
             if (ModelState.IsValid)
             {
                 db.TicketAttachments.Add(ticketAttachment);
-                db.SaveChanges();
+                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
 

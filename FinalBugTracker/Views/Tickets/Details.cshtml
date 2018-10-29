@@ -164,7 +164,7 @@
                         <strong>Attach File: </strong>
                     </div>
                     <div>
-                        @using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post))
+                        @using (Html.BeginForm("Attachment", "Tickets", FormMethod.Post))
                         {
                             @Html.AntiForgeryToken()
                             <button name="id" value="@Model.Id"> Attach </button>
